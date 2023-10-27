@@ -250,8 +250,6 @@ def generar_matriz():
 
 matriz_aleatoria, start, finish = generar_matriz()
 
-start = [2,7]
-finish = [2,0]
 raiz = TreeNode(0, start, None)
 # raiz = None
 raiz.raiz = True
