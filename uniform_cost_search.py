@@ -1,5 +1,5 @@
-import matriz_random
 import grafica
+import matriz_random
 
 class TreeNode:
     def __init__(self, cost, position, padre):
@@ -11,7 +11,7 @@ class TreeNode:
         self.cambiado = False
         self.posicion_anterior_de_mi_padre = None
         self.completo = False
-        self.matriz = matriz
+        # self.matriz = matriz
         
     #comparamos la posicion de un nodo para saber si ya llegamos a la meta
     def is_goal(self, meta):
@@ -204,61 +204,61 @@ def expandir(matriz, padre):
 
 #----------------------------------     PRUEBAS     ---------------------------------
 # matriz = [
-#     # [1, 1, 3, 1, 1, 1, 1, 1],
-#     # [1, -2, 0, 0, -2, 0, 0, 1],
-#     # [1, 0, 1, 1, 1, 0, 0, 1],
-#     # [1, 0, 1, 0, 0, 0, 1, 1],
-#     # [1, -2, 1, 3, 1, 1, 1, 1],
-    
-#     [1, 1, 1, 1, 0, -2, 0, 1],
-#     [0, 0, 1, 1, 1, 1, -2, 1],
-#     [-2, 0, 3, 0, 0, 1, 1, 1],
-#     [1, 1, 0, 1, 0, 1, 1, 1],
-#     [1, 0, 1, 1, 1, 1, 0, 3]
+#     [1, 1, 3, 1, 1, 1, 1, 1],
+#     [1, -2, 0, 0, -2, 0, 0, 1],
+#     [1, 0, 1, 1, 1, 0, 0, 1],
+#     [1, 0, 1, 0, 0, 0, 1, 1],
+#     [1, -2, 1, 3, 1, 1, 1, 1]
   
 # ]
 
-# Tamaño de la matriz
-filas = 5
-columnas = 8
+def generar_matriz():
+    # Tamaño de la matriz
+    filas = 5
+    columnas = 8
 
-# Número a colocar en posiciones aleatorias
-#muriel = 4, coraje = 5 (esto solo para pintar la interfaz)
-numero = [3, -2, 0, 4, 5]
+    # Número a colocar en posiciones aleatorias
+    #muriel = 4, coraje = 5 (esto solo para pintar la interfaz)
+    numero = [3, -2, 0, 4, 5]
 
-# Cantidad de veces que se debe colocar el número
-cantGatos = 2
-cantAmos = 3
-cantObstaculos = 11
-muriel = 1
-coraje = 1
+    # Cantidad de veces que se debe colocar el número
+    cantGatos = 2
+    cantAmos = 3
+    cantObstaculos = 11
+    muriel = 1
+    coraje = 1
 
-# Inicializar una matriz con unos que son los espacios en blanco
-matriz = [[1] * columnas for _ in range(filas)]
+    # Inicializar una matriz con unos que son los espacios en blanco
+    matriz = [[1] * columnas for _ in range(filas)]
 
-# Llena la matriz con el número en posiciones aleatorias
-matriz_aleatoria = matriz_random.llenar_matriz(matriz, numero, cantGatos, cantAmos, cantObstaculos, muriel, coraje)
+    # Llena la matriz con el número en posiciones aleatorias
+    matriz_aleatoria = matriz_random.llenar_matriz(matriz, numero, cantGatos, cantAmos, cantObstaculos, muriel, coraje)
 
-#cambiar los numeros 4 y 5 por 1
-for row in range(len(matriz_aleatoria)):
-    for col in range(len(matriz_aleatoria[0])):
-        if matriz_aleatoria[row][col] == 4:
-            finish = [row,col]
-            matriz_aleatoria[row][col] = 1
-        if matriz_aleatoria[row][col] == 5:
-            start = [row,col]
-            matriz_aleatoria[row][col] = 1
-            
+    #cambiar los numeros 4 y 5 por 1
+    start = []
+    finish = []
+    for row in range(len(matriz_aleatoria)):
+        for col in range(len(matriz_aleatoria[0])):
+            if matriz_aleatoria[row][col] == 4:
+                finish = [row,col]
+                matriz_aleatoria[row][col] = 1
+            if matriz_aleatoria[row][col] == 5:
+                start = [row,col]
+                matriz_aleatoria[row][col] = 1
+    
+    return matriz_aleatoria, start, finish
 
+matriz_aleatoria, start, finish = generar_matriz()
+
+start = [2,7]
+finish = [2,0]
 raiz = TreeNode(0, start, None)
 # raiz = None
 raiz.raiz = True
-
 dato = construir(matriz_aleatoria, raiz, finish)
 
 # Extraer el costo
 costo = dato[0]
-
 # Convertir la lista anidada en una lista de tuplas
 nodos_recorridos = [tuple(sublista) for sublista in dato[1]]
 
@@ -270,7 +270,7 @@ print('------------Matriz----------------')
 for i in matriz_aleatoria:
     print(i)
     
-    
-grafica.start_visualization(matriz_aleatoria, start, finish, nodos_recorridos)
+grafica.start_visualization(matriz_aleatoria, start, finish, nodos_recorridos, costo)
+
 
 

@@ -1,0 +1,1 @@
+El algoritmo inicia desde uniform_cost_search, , cada que se ejecuta el programa se genera una matriz aleatoria
